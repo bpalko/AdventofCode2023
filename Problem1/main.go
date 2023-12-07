@@ -32,8 +32,7 @@ func main() {
 	for scanner.Scan() {
 		curLine := scanner.Text()
 		// regex scan the string for only number, preserving order
-		re := regexp.MustCompile(`(?:[1-9]|one|two|three|four|five|six|seven|eight|nine)`) //(`\d`)
-		fmt.Println(re.FindAllString(curLine, -1))
+		re := regexp.MustCompile(`\d|one|two|three|four|five|six|seven|eight|nine`) //(`(?:[1-9]|one|two|three|four|five|six|seven|eight|nine)`) //(`\d`)
 		nums := (re.FindAllString(curLine, -1))
 		fmt.Printf("nums: %v\n", nums)
 		// take the result and grab index[0] and index[-1]
@@ -44,6 +43,7 @@ func main() {
 		last = processString(last)
 		// concat values
 		cat := first + last
+		fmt.Printf("cat: %v\n", cat)
 		// append to master list of calibrations
 		calibrationList = append(calibrationList, cat)
 	}
