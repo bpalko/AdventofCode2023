@@ -7,7 +7,20 @@ import (
 	"os"
 	"regexp"
 	"strconv"
+	"strings"
 )
+
+var englishToNumber = map[string]int{
+	"one":   1,
+	"two":   2,
+	"three": 3,
+	"four":  4,
+	"five":  5,
+	"six":   6,
+	"seven": 7,
+	"eight": 8,
+	"nine":  9,
+}
 
 func main() {
 	file, err := os.Open("input.txt")
@@ -19,7 +32,7 @@ func main() {
 	for scanner.Scan() {
 		curLine := scanner.Text()
 		// regex scan the string for only number, preserving order
-		re := regexp.MustCompile(`\d`)
+		re := regexp.MustCompile(`(?:[1-9]|one|two|three|four|five|six|seven|eight|nine)`) //(`\d`)
 		fmt.Println(re.FindAllString(curLine, -1))
 		nums := (re.FindAllString(curLine, -1))
 		fmt.Printf("nums: %v\n", nums)
@@ -27,6 +40,8 @@ func main() {
 		first := nums[0]
 		last := nums[len(nums)-1]
 		fmt.Printf("first and last : %v + %v\n", first, last)
+		first = processString(first)
+		last = processString(last)
 		// concat values
 		cat := first + last
 		// append to master list of calibrations
@@ -40,4 +55,15 @@ func main() {
 		sums = valInt + sums
 	}
 	fmt.Printf("sums: %v\n", sums)
+}
+
+func processString(originalString string) string {
+	substring := strings.ToLower(originalString) // Convert to lowercase for case-insensitive matching
+
+	// Check if the substring is an English representation in the map
+	if numberValue, exists := englishToNumber[substring]; exists {
+		fmt.Printf("numberValue: %v\n", numberValue)
+		return strconv.Itoa(numberValue)
+	}
+	return originalString
 }
