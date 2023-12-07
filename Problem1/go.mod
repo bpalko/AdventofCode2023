@@ -1,3 +1,3 @@
-module advent-2024
+module advent-2023
 
 go 1.21.4
