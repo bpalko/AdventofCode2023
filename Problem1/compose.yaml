@@ -1,0 +1,3 @@
+services: # list your services
+  problem1: # container
+    build: . # execute docker build on the given Dockerfile in curr directory
